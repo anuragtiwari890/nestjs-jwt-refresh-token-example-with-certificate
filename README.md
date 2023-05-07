@@ -52,9 +52,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## using the APIs - 
+## APIs Example - 
 
-1. Add the new user 
+1. Add new user 
 ```bash
 curl --location --request POST 'http://localhost:3000/user/add' \
 --header 'Content-Type: application/json' \
@@ -67,7 +67,7 @@ curl --location --request POST 'http://localhost:3000/user/add' \
 }'
 ```
 
-2. login 
+2. Login 
 ```bash
 curl --location --request POST 'http://localhost:3000/auth/login' \
 --header 'Content-Type: application/json' \
@@ -77,7 +77,7 @@ curl --location --request POST 'http://localhost:3000/auth/login' \
 }'
 ```
 
-3. token Info 
+3. Token Info 
 ```bash
 curl --location --request POST 'http://localhost:3000/auth/login' \
 curl --location --request GET 'http://localhost:3000/user/tokenInfo' \
