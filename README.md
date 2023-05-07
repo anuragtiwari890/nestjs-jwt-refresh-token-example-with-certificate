@@ -24,13 +24,20 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest) framework example for setting up the authentication using JWT with the concept of refresh token.
 
 ## Installation
 
 ```bash
 $ npm install
 ```
+
+## Setup
+1. Create a keys folder on the top level.
+2. Inside keys folder create these files - jwt-token-private.key, jwt-token-public.key, refresh-private.key, refresh-token-public.key.
+3. Now generate the RSA public and private key pair (can use this site to generate https://cryptotools.net/rsagen).
+4. Paste the private key content in `jwt-token-private.key` and public key content in `jwt-token-public.key`.
+5. Now generate the new RSA key pair and paste the private key in `refresh-private.key` and public key content in `refresh-token-public.key.`
 
 ## Running the app
 
@@ -45,29 +52,43 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## using the APIs - 
 
+1. Add the new user 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+curl --location --request POST 'http://localhost:3000/user/add' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "emailId": "admin@example.com",
+    "password": "1234567",
+    "firstName": "Admin",
+    "lastName": "example",
+    "companyName": "myCompany"
+}'
 ```
 
-## Support
+2. login 
+```bash
+curl --location --request POST 'http://localhost:3000/auth/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "emailId": "admin@example.com",
+    "password": "1234567"
+}'
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+3. token Info 
+```bash
+curl --location --request POST 'http://localhost:3000/auth/login' \
+curl --location --request GET 'http://localhost:3000/user/tokenInfo' \
+--header 'Authorization: Bearer <acces_token received in the response of auth/login API>'
+```
 
-## Stay in touch
+4. Refresh Token
+```bash
+curl --location --request POST 'http://localhost:3000/auth/refreshToken' \
+--header 'Authorization: Bearer <refreshToken received int the response of auth/login API>' \
+--data-raw ''
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+* Note for the simplicity fo the project have not used any DB, TypeORM, dotenv modules. The main idea was to keep it simple with a clean approach for the example of refresh token with jwt.
