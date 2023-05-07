@@ -6,8 +6,8 @@ import { UserTokenService } from './user-token.service';
 export class UserTokenController {
   constructor(private readonly userTokenService: UserTokenService) {}
 
-  @Get('getTokens')
-  async getTokens(): Promise<UserToken[]> {
+  @Get('listAll')
+  async listAll(): Promise<UserToken[]> {
     return await this.userTokenService.getAllTokens();
   }
 }

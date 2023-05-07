@@ -11,7 +11,7 @@ export class UserDto {
   lastName: string;
 
   @IsString()
-  firtName: string;
+  firstName: string;
 
   @IsString()
   companyName: string;

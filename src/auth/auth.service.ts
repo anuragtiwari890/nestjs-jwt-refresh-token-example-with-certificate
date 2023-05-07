@@ -21,10 +21,10 @@ export class AuthService {
   ) {}
 
   async signIn(
-    email: string,
+    emailId: string,
     password: string,
   ): Promise<{ accessToken: string; refreshToken: string }> {
-    const user = await this.userService.findByEmail(email);
+    const user = await this.userService.findByemailId(emailId);
 
     if (user?.password !== password) {
       throw new UnauthorizedException();
@@ -55,7 +55,7 @@ export class AuthService {
 
   async validateUser(payload: {
     sub: string;
-    emaildId: string;
+    emailId: string;
   }): Promise<User> {
     const user = this.userService.findByUserId(payload.sub);
     return user;

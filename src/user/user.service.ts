@@ -8,7 +8,7 @@ import { v4 as uuid } from 'uuid';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async findByEmail(emailId: string): Promise<User | undefined> {
+  async findByemailId(emailId: string): Promise<User | undefined> {
     return this.userRepository.findByUserEmailId(emailId);
   }
 
@@ -22,10 +22,14 @@ export class UserService {
       emailId: userDto.emailId,
       password: userDto.password,
       lastName: userDto.lastName,
-      firstName: userDto.firtName,
+      firstName: userDto.firstName,
       companyName: userDto.companyName,
     };
 
     return this.userRepository.insertUser(user);
+  }
+
+  async listAll() {
+    return this.userRepository.listAll();
   }
 }

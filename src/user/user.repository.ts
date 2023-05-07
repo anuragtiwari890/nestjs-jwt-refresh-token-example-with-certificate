@@ -4,16 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class UserRepository {
-  users: User[] = [
-    {
-      id: uuid(),
-      emailId: 'anurag@temp.com',
-      password: '12345',
-      firstName: 'Anurag',
-      lastName: 'tiwari',
-      companyName: 'mywork',
-    },
-  ];
+  users: User[] = [];
 
   insertUser(user: User) {
     this.users.push(user);
@@ -26,5 +17,9 @@ export class UserRepository {
 
   findByUserEmailId(emailId: string) {
     return this.users.filter((it) => it.emailId === emailId)[0];
+  }
+
+  listAll() {
+    return this.users;
   }
 }
