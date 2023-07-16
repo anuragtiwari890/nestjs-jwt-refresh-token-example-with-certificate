@@ -34,7 +34,7 @@ $ npm install
 
 ## Setup
 1. Create a keys folder on the top level.
-2. Inside keys folder create these files - jwt-token-private.key, jwt-token-public.key, refresh-private.key, refresh-token-public.key.
+2. Inside keys folder create these files - jwt-token-private.key, jwt-token-public.key, refresh-token-private.key, refresh-token-public.key.
 3. Now generate the RSA public and private key pair (can use this site to generate https://cryptotools.net/rsagen).
 4. Paste the private key content in `jwt-token-private.key` and public key content in `jwt-token-public.key`.
 5. Now generate the new RSA key pair and paste the private key in `refresh-private.key` and public key content in `refresh-token-public.key.`
@@ -79,7 +79,6 @@ curl --location --request POST 'http://localhost:3000/auth/login' \
 
 3. Token Info 
 ```bash
-curl --location --request POST 'http://localhost:3000/auth/login' \
 curl --location --request GET 'http://localhost:3000/user/tokenInfo' \
 --header 'Authorization: Bearer <acces_token received in the response of auth/login API>'
 ```
