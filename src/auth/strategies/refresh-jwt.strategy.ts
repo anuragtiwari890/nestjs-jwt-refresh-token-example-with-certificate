@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../auth.service';
 import { User } from 'src/user/user';
+import { AuthConfig } from 'src/config';
 
 const jwtFromRequest: JwtFromRequestFunction =
   ExtractJwt.fromAuthHeaderAsBearerToken();
@@ -19,9 +20,6 @@ export interface RefreshTokenSession {
   user: User;
   emailId: string;
 }
-
-// to keep the code simple, have not used dotenv config
-const REFRESH_TOKEN_PUBLIC_KEY_PATH = 'keys/refresh-token-public.key';
 
 @Injectable()
 export class RefreshJwtStrategy extends PassportStrategy(
@@ -33,7 +31,7 @@ export class RefreshJwtStrategy extends PassportStrategy(
       jwtFromRequest,
       secretOrKeyProvider: async (request, jwtToken, done) => {
         const publicKey = await fs.readFileSync(
-          REFRESH_TOKEN_PUBLIC_KEY_PATH,
+          AuthConfig.JWT_REFRESH_TOKEN_PUBLIC_KEY_PATH,
           'utf8',
         );
         return done(null, publicKey);

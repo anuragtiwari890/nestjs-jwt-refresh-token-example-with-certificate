@@ -1,16 +1,12 @@
 import * as fs from 'fs';
 
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, JwtModuleOptions } from '@nestjs/jwt';
 import { User } from 'src/user/user';
+import { AuthConfig } from 'src/config';
 import { UserService } from 'src/user/user.service';
 import { RefreshTokenSession } from './strategies/refresh-jwt.strategy';
 import { UserTokenService } from 'src/user-token/user-token.service';
-
-// to keep the code simple, have not used dotenv config
-const TOKEN_ALGORITHEM = 'RS256';
-const LOGIN_TOKEN_EXPIRATION_TIME = '15m';
-const REFRESH_TOKEN_PRIVATE_KEY_PATH = 'keys/refresh-token-private.key';
 
 @Injectable()
 export class AuthService {
@@ -113,8 +109,8 @@ export class AuthService {
         iat,
       },
       {
-        algorithm: TOKEN_ALGORITHEM,
-        expiresIn: LOGIN_TOKEN_EXPIRATION_TIME,
+        algorithm: 'RS256',
+        expiresIn: AuthConfig.LOGIN_TOKEN_EXPIRATION_TIME,
       },
     );
   }
@@ -132,9 +128,9 @@ export class AuthService {
         iat,
       },
       {
-        algorithm: TOKEN_ALGORITHEM,
-        expiresIn: LOGIN_TOKEN_EXPIRATION_TIME,
-        secret: fs.readFileSync(REFRESH_TOKEN_PRIVATE_KEY_PATH, 'utf8'),
+        algorithm: 'RS256',
+        expiresIn: AuthConfig.LOGIN_TOKEN_EXPIRATION_TIME,
+        secret: fs.readFileSync(AuthConfig.JWT_REFRESH_TOKEN_PUBLIC_KEY_PATH, 'utf8'), // this should be cached
       },
     );
   }

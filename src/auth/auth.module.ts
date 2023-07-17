@@ -8,8 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { RefreshJwtStrategy } from './strategies/refresh-jwt.strategy';
 import { UserTokenModule } from 'src/user-token/user-token.module';
-
-const JWT_TOKEN_PRIVATE_KEY_PATH = 'keys/jwt-token-private.key';
+import { AuthConfig } from 'src/config';
 
 @Module({
   imports: [
@@ -18,7 +17,7 @@ const JWT_TOKEN_PRIVATE_KEY_PATH = 'keys/jwt-token-private.key';
     JwtModule.registerAsync({
       useFactory: async () => {
         return {
-          privateKey: await fs.readFileSync(JWT_TOKEN_PRIVATE_KEY_PATH, 'utf8'),
+          privateKey: await fs.readFileSync(AuthConfig.JWT_TOKEN_PRIVATE_KEY_PATH, 'utf8'),
         };
       },
     }),

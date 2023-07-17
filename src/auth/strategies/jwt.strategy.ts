@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../auth.service';
 import { User } from 'src/user/user';
+import { AuthConfig } from 'src/config';
 
 const jwtFromRequest: JwtFromRequestFunction =
   ExtractJwt.fromAuthHeaderAsBearerToken();
@@ -20,16 +21,13 @@ export interface TokenSession {
   emailId: string;
 }
 
-// to keep the code simple, have not used dotenv config
-const JWT_PUBLIC_KEY_PATH = 'keys/jwt-token-public.key';
-
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest,
       secretOrKeyProvider: async (request, jwtToken, done) => {
-        const publicKey = await fs.readFileSync(JWT_PUBLIC_KEY_PATH, 'utf-8');
+        const publicKey = await fs.readFileSync(AuthConfig.JWT_PUBLIC_KEY_PATH, 'utf-8');
         return done(null, publicKey);
       },
       passReqToCallback: true,
